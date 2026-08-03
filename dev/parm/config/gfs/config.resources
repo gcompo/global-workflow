@@ -1086,7 +1086,7 @@ case ${step} in
     ;;
 
   "fit2obs")
-    walltime="00:20:00"
+    walltime="01:00:00"
     ntasks=3
     threads_per_task=1
     tasks_per_node=1
