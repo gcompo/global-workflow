@@ -10,6 +10,7 @@ if (homegfssdir == "None" and mode() == "load") then
               "Please \"source dev/ush/load_modules.sh\" rather than loading this module directly.\n")
 end
 
+prepend_path("MODULEPATH", "/ncrc/proj/ira-da/usw/modulefiles")
 load("gw_run.common")
 
 load(pathJoin("perlbrew", (os.getenv("perl_ver") or "None")))
