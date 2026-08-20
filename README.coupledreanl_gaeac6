@@ -36,7 +36,7 @@ RUNTESTS="/gpfs/f6/ira-da/scratch/$USER/GWTESTS" \
 ICSDIR_ROOT="/gpfs/f6/ira-da/proj-shared/Jeffrey.S.Whitaker/replayics/C192mx025" \
   ./dev/workflow/create_experiment.py --yaml dev/ci/cases/coupledreanl/C192mx025_3DVarAOWCDA.yaml
 
-Example with the ira-da project (filesystem and Slurm account are the same):
+Example with the ira-da project (Gaea C6, filesystem project and Slurm account are the same):
 HPC_ACCOUNT="ira-da" \
 pslot="C192coupled3dvar_test" \
 RUNTESTS="/gpfs/f6/ira-da/scratch/$USER/GWTESTS" \

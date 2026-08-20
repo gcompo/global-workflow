@@ -225,7 +225,7 @@ default to ``ACCOUNT``.
    ICSDIR_ROOT="/gpfs/f6/<filesystem-project-account>/proj-shared/<path-to-ics>" \
      ./dev/workflow/create_experiment.py --yaml dev/ci/cases/coupledreanl/C192mx025_3DVarAOWCDA.yaml
 
-Concrete example (``ira-da`` project on Gaea C6):
+Concrete Gaea C6 example (``ira-da`` project, filesystem project and Slurm account are the same):
 
 ::
 
@@ -274,6 +274,6 @@ After ``create_experiment.py`` completes, the experiment is ready to run:
    ./rocoto_viewer.py -w $PSLOT.xml -d $PSLOT.db   # monitor progress
 
 .. note::
-   Log files are written to ``$RUNTESTS/COMROOT/$EXPDIR/logs``.  If
+   Log files are written to ``$RUNTESTS/COMROOT/$PSLOT/logs``.  If
    ``rocoto_viewer`` shows a workflow step failed, check the log file in that
    directory for the error message.
