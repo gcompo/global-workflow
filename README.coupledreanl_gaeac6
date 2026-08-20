@@ -7,10 +7,59 @@ cd sorc
 ./build_all.sh gfs gsi gdas &> build_all.out
 sh linkworkflow.sh
 cd ..
-pslot="C192coupled3dvar_test" RUNTESTS="/gpfs/f6/ira-da/scratch/$USER/GWTESTS" ICSDIR_ROOT="/gpfs/f6/ira-da/proj-shared/Jeffrey.S.Whitaker/replayics/C192mx025" HPC_ACCOUNT="ira-da" ./dev/workflow/create_experiment.py --yaml dev/ci/cases/coupledreanl/C192mx025_3DVarAOWCDA.yaml
 
-on orion/hercules:
-pslot="C192coupled3dvar_test" RUNTESTS="/work2/noaa/gsienkf/$USER/GWTESTS" ICSDIR_ROOT="/work/noaa/gsienkf/whitaker/replayics/C192mx025" HPC_ACCOUNT="gsienkf" ./dev/workflow/create_experiment.py --yaml dev/ci/cases/coupledreanl/C192mx025_3DVarAOWCDA.yaml
+===========================================================================
+NOAA-PSL COUPLED REANALYSIS EXPERIMENT SETUP
+===========================================================================
+
+The primary supported setup path for NOAA-PSL coupled reanalysis experiments
+is ./dev/workflow/create_experiment.py.  This script consumes a case YAML
+file and performs both experiment-directory configuration and workflow
+generation by calling the underlying setup_expt.py and setup_workflow.py
+scripts.  The lower-level scripts remain available for debugging, development,
+and advanced/manual workflows, but create_experiment.py is the recommended
+and supported entry point for running coupled reanalysis experiments.
+
+On Gaea C6 the Slurm charging account (HPC_ACCOUNT) and the /gpfs/f6/
+filesystem project directory (PATH_ACCOUNT) may differ.  Both can be
+supplied as environment variables when invoking create_experiment.py:
+
+  HPC_ACCOUNT: Slurm account used for job charging
+  PATH_ACCOUNT: filesystem project account used to construct HOMEDIR, STMP,
+                and PTMP paths under /gpfs/f6/.  Defaults to HPC_ACCOUNT on
+                platforms where the two are identical.
+
+On Gaea C6 (filesystem project and Slurm account differ):
+HPC_ACCOUNT="<slurm-account>" PATH_ACCOUNT="<filesystem-project-account>" \
+pslot="C192coupled3dvar_test" \
+RUNTESTS="/gpfs/f6/ira-da/scratch/$USER/GWTESTS" \
+ICSDIR_ROOT="/gpfs/f6/ira-da/proj-shared/Jeffrey.S.Whitaker/replayics/C192mx025" \
+  ./dev/workflow/create_experiment.py --yaml dev/ci/cases/coupledreanl/C192mx025_3DVarAOWCDA.yaml
+
+Example with the ira-da project (filesystem and Slurm account are the same):
+HPC_ACCOUNT="ira-da" \
+pslot="C192coupled3dvar_test" \
+RUNTESTS="/gpfs/f6/ira-da/scratch/$USER/GWTESTS" \
+ICSDIR_ROOT="/gpfs/f6/ira-da/proj-shared/Jeffrey.S.Whitaker/replayics/C192mx025" \
+  ./dev/workflow/create_experiment.py --yaml dev/ci/cases/coupledreanl/C192mx025_3DVarAOWCDA.yaml
+
+On orion/hercules (PATH_ACCOUNT defaults to HPC_ACCOUNT):
+HPC_ACCOUNT="gsienkf" \
+pslot="C192coupled3dvar_test" \
+RUNTESTS="/work2/noaa/gsienkf/$USER/GWTESTS" \
+ICSDIR_ROOT="/work/noaa/gsienkf/whitaker/replayics/C192mx025" \
+  ./dev/workflow/create_experiment.py --yaml dev/ci/cases/coupledreanl/C192mx025_3DVarAOWCDA.yaml
+
+Alternatively, PATH_ACCOUNT (and other user settings) can be placed in a
+custom gwrc file and referenced via the experiment YAML's experiment section:
+
+  experiment:
+    gwrc: '/path/to/my_custom.gwrc'
+
+where my_custom.gwrc contains:
+  user:
+    ACCOUNT: 'new-charging-account'
+    PATH_ACCOUNT: 'ira-da'
 
 cd to EXPDIR
 run rocotorun -w $PSLOT.xml -d $PSLOT.db
