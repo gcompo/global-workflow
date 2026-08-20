@@ -629,6 +629,9 @@ def update_host_info_with_user_gwrc(host_info: Dict, gwrc: Dict) -> Dict:
 
     # Set default account if not defined in gwrc
     host_info_out.ACCOUNT = 'UNDEFINED'
+    # PATH_ACCOUNT defaults to ACCOUNT if not explicitly set
+    if not hasattr(host_info_out, 'PATH_ACCOUNT'):
+        host_info_out.PATH_ACCOUNT = 'UNDEFINED'
 
     for key, value in gwrc.items():
         if hasattr(host_info_out, key):
@@ -637,6 +640,10 @@ def update_host_info_with_user_gwrc(host_info: Dict, gwrc: Dict) -> Dict:
                 setattr(host_info_out, key, value)
         else:
             logger.warning(f"Invalid key '{key}' in .gwrc not found in host info; skipping.")
+
+    # If PATH_ACCOUNT was not explicitly set, default it to ACCOUNT
+    if host_info_out.PATH_ACCOUNT == 'UNDEFINED':
+        host_info_out.PATH_ACCOUNT = host_info_out.ACCOUNT
 
     return host_info_out
 
