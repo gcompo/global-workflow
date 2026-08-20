@@ -27,13 +27,29 @@ Step 1: Set user settings
 
 To make it easy for a user to specify the some of the user specific variables, users can create a ``.gwrc`` file in their home directory.  An example is provided in ``$TOP_OF_CLONE/dev/parm/workflow/gwrc`` that contains the following variables:
 
-   - ACCOUNT: the account to charge for the run
+   - ACCOUNT: the account to charge for the run (Slurm charging account)
+   - PATH_ACCOUNT: the filesystem project account used to construct paths such as ``HOMEDIR``, ``STMP``, and ``PTMP``.  On most platforms this defaults to ``ACCOUNT``.  On Gaea C6, the Slurm charging account and the ``/gpfs/f6/`` filesystem project directory may differ, so ``PATH_ACCOUNT`` can be set independently of ``ACCOUNT``.
    - HOMEDIR: the home directory of the user
    - STMP: the path to the DATAROOT storage area for the run
    - PTMP: the path to the COMROOT storage area for the run
    - HPSS_PROJECT: the project on HPSS to charge for the run
 
 This file is read by the ``setup_expt.py`` script to set the user specific variables. If you do not have a ``.gwrc`` file, the setup script will revert to the default values in the repository.
+
+.. note::
+   **Gaea C6 users:** If your Slurm charging account differs from the ``/gpfs/f6/`` filesystem project directory, set both ``ACCOUNT`` (Slurm) and ``PATH_ACCOUNT`` (filesystem) in your ``.gwrc``.  For example::
+
+      user:
+        ACCOUNT: 'new-charging-account'
+        PATH_ACCOUNT: 'ira-da'
+
+   ``PATH_ACCOUNT`` can also be set when using ``create_experiment.py`` by specifying a custom ``gwrc`` path in the experiment YAML's ``experiment`` section::
+
+      experiment:
+        gwrc: '/path/to/my_custom.gwrc'
+        ...
+
+   where ``my_custom.gwrc`` contains the ``PATH_ACCOUNT`` entry shown above.
 
 ***************************************
 Step 2: Run experiment generator script
@@ -129,6 +145,7 @@ Step 3: Check user and experiment settings
 Go to your ``EXPDIR`` and check the following variables within your ``config.base`` now before running the next script:
 
    * ``ACCOUNT``
+   * ``PATH_ACCOUNT`` (filesystem project account; defaults to ``ACCOUNT`` on most platforms; see note in Step 1 for Gaea C6 users)
    * ``HOMEDIR``
    * ``STMP``
    * ``PTMP``
