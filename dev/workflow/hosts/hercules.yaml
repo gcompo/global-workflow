@@ -6,7 +6,7 @@ BASE_DATA: '/work2/noaa/global/role-global/data'
 BASE_IC: '/work2/noaa/global/role-global/data/ICSDIR'
 AERO_INPUTS_DIR: '/work2/noaa/global/role-global/data/GEFS_ExtData/20250310'
 PACKAGEROOT: '/work2/noaa/global/role-global/nwpara'
-HOMEDIR: '/work2/noaa/${ACCOUNT}/${USER}'
+HOMEDIR: '/work2/noaa/${PATH_ACCOUNT}/${USER}'
 STMP: '/work2/noaa/stmp/${USER}/${machine^^}'
 PTMP: '/work2/noaa/stmp/${USER}/${machine^^}'
 NOSCRUB: '${HOMEDIR}'
@@ -14,6 +14,7 @@ COMINsyn: '/work2/noaa/global/role-global/com/gfs/prod/syndat'
 COMINecmwf: '/work2/noaa/global/role-global/data/external_gempak/ecmwf'
 COMINnam: '/work2/noaa/global/role-global/data/external_gempak/nam'
 COMINukmet: '/work2/noaa/global/role-global/data/external_gempak/ukmet'
+PATH_ACCOUNT: '${ACCOUNT}'
 # BQS properties
 SCHEDULER: slurm
 QUEUE: batch

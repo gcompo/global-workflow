@@ -4,6 +4,7 @@
 # realizing the templated variables
 user:
   ACCOUNT: {{ 'HPC_ACCOUNT' | getenv }}
+  PATH_ACCOUNT: 'default'
   HOMEDIR: 'default'
   STMP: 'default'
   PTMP: 'default'
