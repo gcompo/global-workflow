@@ -21,6 +21,15 @@ Scripts that will be used:
    * ``dev/workflow/setup_expt.py``
    * ``dev/workflow/setup_workflow.py``
 
+.. note::
+   **NOAA-PSL coupled reanalysis experiments:** ``./dev/workflow/create_experiment.py``
+   is the primary supported setup path.  This script consumes a case YAML file and
+   performs both experiment-directory configuration and workflow generation by calling
+   the underlying ``setup_expt.py`` and ``setup_workflow.py`` scripts.  Direct use of
+   those lower-level scripts remains available for debugging, development, and
+   advanced/manual workflows, but ``create_experiment.py`` is the recommended entry
+   point.  See `NOAA-PSL Coupled Reanalysis Setup`_ for a complete example.
+
 ****************************************
 Step 1: Set user settings
 ****************************************
@@ -186,3 +195,85 @@ Step 5: Confirm files from setup scripts
 ****************************************
 
 You will now have a rocoto xml file in your ``$EXPDIR`` (``$PSLOT.xml``) and a crontab file generated for your use. Rocoto uses CRON as the scheduler. If you do not have a crontab file you may not have had the rocoto module loaded. To fix this load a rocoto module and then rerun setup_workflow.py script again. Follow directions for setting up the rocoto cron on the platform the experiment is going to run on.
+
+.. _noaa-psl-coupled-reanalysis-setup:
+
+*******************************************
+NOAA-PSL Coupled Reanalysis Setup
+*******************************************
+
+For NOAA-PSL coupled reanalysis experiments, ``./dev/workflow/create_experiment.py``
+is the primary supported setup path.  This script consumes a case YAML file and
+performs both experiment-directory configuration and workflow generation by invoking
+``setup_expt.py`` and ``setup_workflow.py`` internally.  Direct use of those
+lower-level scripts may remain available for debugging, development, and
+advanced/manual workflows.
+
+On Gaea C6 the Slurm charging account (``HPC_ACCOUNT`` → ``ACCOUNT``) and the
+``/gpfs/f6/`` filesystem project directory (``PATH_ACCOUNT``) may differ.  Both
+can be supplied as environment variables on the command line.  When they are the
+same (most platforms), only ``HPC_ACCOUNT`` is needed; ``PATH_ACCOUNT`` will
+default to ``ACCOUNT``.
+
+**Gaea C6 — filesystem project and Slurm account differ:**
+
+::
+
+   HPC_ACCOUNT="<slurm-account>" PATH_ACCOUNT="<filesystem-project-account>" \
+   pslot="<experiment-name>" \
+   RUNTESTS="/gpfs/f6/<filesystem-project-account>/scratch/$USER/GWTESTS" \
+   ICSDIR_ROOT="/gpfs/f6/<filesystem-project-account>/proj-shared/<path-to-ics>" \
+     ./dev/workflow/create_experiment.py --yaml dev/ci/cases/coupledreanl/C192mx025_3DVarAOWCDA.yaml
+
+Concrete Gaea C6 example (``ira-da`` project, filesystem project and Slurm account are the same):
+
+::
+
+   HPC_ACCOUNT="ira-da" \
+   pslot="C192coupled3dvar_test" \
+   RUNTESTS="/gpfs/f6/ira-da/scratch/$USER/GWTESTS" \
+   ICSDIR_ROOT="/gpfs/f6/ira-da/proj-shared/Jeffrey.S.Whitaker/replayics/C192mx025" \
+     ./dev/workflow/create_experiment.py --yaml dev/ci/cases/coupledreanl/C192mx025_3DVarAOWCDA.yaml
+
+**Orion/Hercules (** ``PATH_ACCOUNT`` **defaults to** ``HPC_ACCOUNT`` **):**
+
+::
+
+   HPC_ACCOUNT="gsienkf" \
+   pslot="C192coupled3dvar_test" \
+   RUNTESTS="/work2/noaa/gsienkf/$USER/GWTESTS" \
+   ICSDIR_ROOT="/work/noaa/gsienkf/whitaker/replayics/C192mx025" \
+     ./dev/workflow/create_experiment.py --yaml dev/ci/cases/coupledreanl/C192mx025_3DVarAOWCDA.yaml
+
+Alternatively, ``PATH_ACCOUNT`` (and other user settings such as ``ACCOUNT``) can
+be placed in a custom ``gwrc`` file and referenced via the experiment YAML's
+``experiment`` section:
+
+::
+
+   experiment:
+     gwrc: '/path/to/my_custom.gwrc'
+     ...
+
+where ``my_custom.gwrc`` contains:
+
+::
+
+   user:
+     ACCOUNT: 'new-charging-account'
+     PATH_ACCOUNT: 'ira-da'
+
+After ``create_experiment.py`` completes, the experiment is ready to run:
+
+::
+
+   cd $EXPDIR/$PSLOT
+   rocotorun -w $PSLOT.xml -d $PSLOT.db
+   scrontab $PSLOT.crontab
+   ln -fs $HOMEGFS/dev/workflow/rocoto_viewer.py .
+   ./rocoto_viewer.py -w $PSLOT.xml -d $PSLOT.db   # monitor progress
+
+.. note::
+   Log files are written to ``$RUNTESTS/COMROOT/$PSLOT/logs``.  If
+   ``rocoto_viewer`` shows a workflow step failed, check the log file in that
+   directory for the error message.
