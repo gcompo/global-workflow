@@ -11,9 +11,7 @@ STMP: '/scratch4/BMC/gsienkf/${USER}/stmp'
 PTMP: '/scratch4/BMC/gsienkf/${USER}/stmp'
 NOSCRUB: '${HOMEDIR}'
 COMINsyn: '/scratch3/NCEPDEV/global/role.glopara/com/gfs/prod/syndat'
-COMINecmwf: '/scratch3/NCEPDEV/global/role.glopara/data/external_gempak/ecmwf'
 COMINnam: '/scratch3/NCEPDEV/global/role.glopara/data/external_gempak/nam'
-COMINukmet: '/scratch3/NCEPDEV/global/role.glopara/data/external_gempak/ukmet'
 # BQS properties
 SCHEDULER: slurm
 QUEUE: batch

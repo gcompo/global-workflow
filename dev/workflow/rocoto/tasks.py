@@ -29,13 +29,13 @@ class Tasks:
                    'fcst',
                    'upp', 'atmanlprod', 'atmupp', 'goesupp',
                    'atmos_products', 'oceanice_products',
-                   'verfozn', 'verfrad', 'vminmon', 'anlstat',
+                   'verfozn', 'verfrad', 'vminmon', 'anlstat', 'wdqms',
                    'metp', 'fit2obs', 'extractvars',
                    'tracker', 'genesis', 'genesis_fsu',
                    'postsnd', 'awips', 'awips_20km_1p0deg', 'fbwind', 'npoess',
                    'gempak', 'gempakmeta', 'gempakmetancdc', 'gempakncdcupapgif', 'gempakpgrb2spec', 'npoess_pgrb2_0p5deg',
                    'waveawipsbulls', 'waveawipsgridded', 'wavegempak', 'waveinit',
-                   'wavepostbndpnt', 'wavepostbndpntbll', 'wavepostpnt', 'wavepostsbs', 'waveprep', 'wave_stat', 'wave_stat_pnt']
+                   'wavepostbndpnt', 'wavepostbndpntbll', 'wavepostpnt', 'wavepostgridded', 'waveprep', 'wave_stat', 'wave_stat_pnt']
 
     def __init__(self, app_config: AppConfig, run: str) -> None:
 

@@ -9,6 +9,10 @@
 ################################################################################
 export err=0
 
+# Set default pgm for err_exit
+pgm=$(basename "${BASH_SOURCE[0]}")
+export pgm
+
 if [[ -s "${oznstat}" ]]; then
     #------------------------------------------------------------------
     #  Copy data files file to local data directory.
@@ -32,14 +36,12 @@ if [[ -s "${oznstat}" ]]; then
     "${USHglobal}/ozn_xtrct.sh" && true
     export err=$?
     if [[ ${err} -ne 0 ]]; then
+        pgm="ozn_xtrct.sh"
         err_exit "ozn_xtrct.sh failed!"
     fi
 
 else
-   # oznstat file not found
-   # 25.06.30 Ding - forcing this to 0 so that it shows as successful even if ozn data is unavailable
-   #     this is a hack to prevent the cycling from stopping when we don't have ozn obs available
-   echo "No ozone obs found for cycle "${PDY}${cyc}"." > ${ROTDIR}/gdas.${PDY}/${cyc}/ozn_obs_missing
-   export err=0
+    echo "WARNING: ${oznstat} not found"
+    echo "WARNING: Exiting without performing ozone verification"
 fi
 exit 0
