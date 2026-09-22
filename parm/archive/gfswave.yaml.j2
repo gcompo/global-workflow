@@ -3,7 +3,7 @@ gfswave:
 
     name: "GFSWAVE"
     target: "{{ ATARDIR }}/{{ cycle_YMDH }}/gfswave.tar"
-    required:
+    optional:
         # Wave GRIB2 regional forecast products
         {% for file_path in WAVE_GRID_RES_COM_list %}
             {% for fh in range(0, FHMAX_HF_WAV + FHOUT_HF_WAV, FHOUT_HF_WAV) %}

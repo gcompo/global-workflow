@@ -1,7 +1,7 @@
 enkf_restartb_grp:
     name: "ENKF_RESTARTB_GRP"
     target: "{{ ATARDIR }}/{{ cycle_YMDH }}/{{ RUN }}_restartb_grp{{ ENSGRP }}.tar"
-    required:
+    optional:
         # Grab surface analysis data.
         # If IAU is on, grab the beginning of the window, otherwise grab the center.
         {% for itile in range(1, 7) %}

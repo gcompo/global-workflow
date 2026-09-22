@@ -1,8 +1,8 @@
 gdas_restarta:
     {% set head = "gdas.t" + cycle_HH + "z." %}
     name: "GDAS_RESTARTA"
-    target: "{{ ATARDIR }}/{{ cycle_YMDH }}/gdas_restarta.tar"
-    required:
+    target: "{{ ATARDIR }}/{{ cycle_YY }}/{{ cycle_MM }}/{{ cycle_YMDH }}/gdas_restarta.tar"
+    optional:
         # Deterministic analysis increments
         {% if DO_JEDIATMVAR and not (ATMINC_GRID == 'gaussian') %}
             {% for iaufhr in iaufhrs_str %}
@@ -50,8 +50,7 @@ gdas_restarta:
         {% endif %}
 
         # Input BUFR files
-        {% for suffix in ['nsstbufr', 'prepbufr', 'prepbufr.acft_profiles'] %}
+        {% for suffix in ['prepbufr', 'prepbufr.acft_profiles'] %}
         - "{{ COMIN_OBS }}/{{ head }}{{ suffix }}"
         {% endfor %}
-    optional:
         - "{{ COMIN_ATMOS_ANALYSIS }}/{{ head }}radstat.tar"

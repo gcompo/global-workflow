@@ -12,8 +12,9 @@ if [[ ${DONST} = "YES" ]]; then
   source "${EXPDIR}/config.nsst"
 fi
 
+#export USE_RADSTAT="NO"
 if [[ "${RUN}" == "gfs" ]] ; then
-  export USE_RADSTAT="NO" # This can be only used when bias correction is not-zero.
+#  export USE_RADSTAT="NO" # This can be only used when bias correction is not-zero.
   export GENDIAG="NO"
   export SETUP='diag_rad=.false.,diag_pcp=.false.,diag_conv=.false.,diag_ozone=.false.,write_diag(3)=.false.,niter(2)=100,'
   export DIAG_TARBALL="YES"
@@ -25,16 +26,19 @@ if [[ ${LEVS} = "128" ]]; then
   export SETUP="gpstop=55,nsig_ext=45,${SETUP:-}"
 fi
 
+export hofx_2m_sfcfile=".true."
+export ignore_2mQM=".true."
+
 # Reduce number of iterations for testing mode
 if [[ ${DO_TEST_MODE} = "YES" ]]; then
   export SETUP="${SETUP:-}niter(1)=5,niter(2)=5,"
 fi
 
 # Do not process the following datasets
-export GSNDBF=${GSNDBF:-/dev/null}
-export AMSREBF=${AMSREBF:-/dev/null}
-export SSMITBF=${SSMITBF:-/dev/null}
-export AMSR2BF=${AMSR2BF:-/dev/null}
+#export GSNDBF=${GSNDBF:-/dev/null}
+#export AMSREBF=${AMSREBF:-/dev/null}
+#export SSMITBF=${SSMITBF:-/dev/null}
+#export AMSR2BF=${AMSR2BF:-/dev/null}
 
 
 # Set default values for info files and observation error
@@ -152,7 +156,8 @@ if [[ ${USE_BUILD_GSINFO} == "YES" ]]; then
    export CONVINFO="generate"
    export OZINFO="generate"
    # this can be over-ridden, for example to use NASA's netcdf ozone files use obs_input_reanl_nasa_ozone.txt.
-   export OBS_INPUT="${BUILD_GSINFO_DIR}/obs_input/obs_input_reanl_ncep_ozone.txt"
+   export OBS_INPUT="${BUILD_GSINFO_DIR}/obs_input/obs_input_reanl_nasa_ozone.txt"
+   #export OBS_INPUT="${BUILD_GSINFO_DIR}/obs_input/obs_input_reanl_ncep_ozone.txt"
 
    # Use 2m observations when constructing conventional obs info file
    # can use 2m obs without enabling soil DA by setting USE_2M_OBS=YES in config.base

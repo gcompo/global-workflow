@@ -1,7 +1,10 @@
 gdasice:
     name: "GDASICE"
-    target: "{{ ATARDIR }}/{{ cycle_YMDH }}/gdasice.tar"
-    required:
-        - "{{ COMIN_ICE_HISTORY }}/{{ RUN }}.t{{ cycle_HH }}z.ic.nc"
+    target: "{{ ATARDIR }}/{{ cycle_YY }}/{{ cycle_MM }}/{{ cycle_YMDH }}/gdasice.tar"
+    optional:
+        #- "{{ COMIN_ICE_HISTORY }}/{{ RUN }}.t{{ cycle_HH }}z.ic.nc"
+        - "{{ COMIN_ICE_HISTORY }}/{{ RUN }}.t{{ cycle_HH }}z.inst.f000.nc"
+        - "{{ COMIN_ICE_HISTORY }}/{{ RUN }}.t{{ cycle_HH }}z.inst.f003.nc"
         - "{{ COMIN_ICE_HISTORY }}/{{ RUN }}.t{{ cycle_HH }}z.inst.f006.nc"
-        - '{{ COMIN_CONF }}/ufs.ice_in'
+        - "{{ COMIN_ICE_HISTORY }}/{{ RUN }}.t{{ cycle_HH }}z.inst.f009.nc"
+        #- '{{ COMIN_CONF }}/ufs.ice_in'

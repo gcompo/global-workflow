@@ -9,5 +9,6 @@ echo "BEGIN: config.sfcanl_regrid"
 source "${EXPDIR}/config.resources" sfcanl_regrid
 
 export REGRID_EXEC="${HOMEglobal}/exec/regridStates.x"
+export DO_GSISOILDA="NO"
 
 echo "END: config.sfcanl_regrid"

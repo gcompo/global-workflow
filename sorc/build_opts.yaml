@@ -38,7 +38,7 @@ systems:
     - "gsi_utils"
 build:
   gfs_model:
-    command: "./build_ufs.sh -e gfs_model.x"
+    command: "./build_ufs.sh -y -e gfs_model.x"
     cores: 12
     walltime: "00:40:00"
     memory: "40G"

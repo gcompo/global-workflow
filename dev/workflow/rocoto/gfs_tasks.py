@@ -354,6 +354,13 @@ class GFSTasks(Tasks):
         if self.options['do_jedisnowda']:
             dep_dict = {'type': 'task', 'name': f'{self.run}_snowanl'}
             deps.append(rocoto.add_dependency(dep_dict))
+        # Ding 25.07.22 temporarily patching this out as we are not running enkfgdas_eupd but need sfcanl
+        # if self.options['do_gsisoilda'] and self.run in ['gdas']:
+        #     dep_dict = {'type': 'task', 'name': 'enkfgdas_eupd'}
+        #     deps.append(rocoto.add_dependency(dep_dict))
+        # Ding 26.05.28 this has now changed in EMC's version, and enkfgdas_eupd is no longer in there.
+        #     Not sure if we need this, so bring EMC's code back in and see if it breaks.
+        #if self.options['do_jedisnowda'] or (self.options['do_gsisoilda'] and self.run in ['gdas']):
         if self.options['do_gsisoilda'] and self.run in ['gdas'] and not self.options['do_gsiliau']:
             dep_dict = {'type': 'task', 'name': f'{self.run}_sfcanl_regrid'}
             deps.append(rocoto.add_dependency(dep_dict))
@@ -383,15 +390,16 @@ class GFSTasks(Tasks):
     def sfcanl_regrid(self):
 
         deps = []
-        dep_dict = {'type': 'task', 'name': 'enkfgdas_eupd'}
-        deps.append(rocoto.add_dependency(dep_dict))
-        dependencies = rocoto.create_dependency(dep=deps)
+        # Ding 26.05.28 Comment out enkfgdas_eupd again here?
+        #dep_dict = {'type': 'task', 'name': 'enkfgdas_eupd'}
+        #deps.append(rocoto.add_dependency(dep_dict))
+        #dependencies = rocoto.create_dependency(dep=deps)
 
         resources = self.get_resource('sfcanl_regrid')
         task_name = f'{self.run}_sfcanl_regrid'
         task_dict = {'task_name': task_name,
                      'resources': resources,
-                     'dependency': dependencies,
+                     #'dependency': dependencies,
                      'envars': self.envars,
                      'cycledef': self.run.replace('enkf', ''),
                      'command': f'{self.HOMEglobal}/dev/job_cards/rocoto/sfcanl_regrid.sh',

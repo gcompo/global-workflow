@@ -1,0 +1,34 @@
+defaults:
+  !INC {{ HOMEglobal }}/dev/parm/config/gfs/yaml/defaults.yaml
+
+base:
+  ACCOUNT: {{ 'HPC_ACCOUNT' | getenv }}
+  HPSS_PROJECT: "ira-da"
+  DOIAU: "YES"
+  DO_JEDIATMVAR: "NO"
+  DO_JEDIATMENS: "NO"
+  DO_JEDIOCNVAR: "YES"
+  DO_JEDISNOWDA: "YES"
+  DO_MERGENSST: "NO"
+  DOHYBVAR: "NO"
+  DO_FIT2OBS: "YES"
+  DO_VERFOZN: "YES"
+  DO_VERFRAD: "YES"
+  DO_TEST_MODE: "NO"
+  DO_GSISOILDA: "YES"
+  MOM6_INTERP_ICS: "NO"
+
+prepoceanobs:
+  use_exp_obs: "YES"
+  #dmpdir_exp: /gpfs/f6/ira-da/proj-shared/Jeffrey.S.Whitaker/da/common
+  dmpdir_exp: /scratch4/BMC/gsienkf/shared/obs
+
+marinebmat:
+  SOCA_INPUT_FIX_DIR: {{ HOMEglobal }}/fix/gdas/soca/1440x1080x75/soca
+  SOCA_ANL_GEOM: {{ HOMEglobal }}/fix/gdas/soca/720x540x75/soca
+
+marineanl:
+  SOCA_INPUT_FIX_DIR: {{ HOMEglobal }}/fix/gdas/soca/1440x1080x75/soca
+  SOCA_ANL_GEOM: {{ HOMEglobal }}/fix/gdas/soca/720x540x75/soca
+  SOCA_OBS_LIST: {{ HOMEglobal }}/sorc/gdas.cd/parm/marine/obs/obs_list.yaml.j2
+  SOCA_NINNER: 100

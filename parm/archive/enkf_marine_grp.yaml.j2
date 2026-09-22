@@ -1,7 +1,7 @@
 enkf_marine_grp:
     name: "ENKF_MARINE_GRP"
     target: "{{ ATARDIR }}/{{ cycle_YMDH }}/{{ RUN }}_marine_grp{{ ENSGRP }}.tar"
-    required:
+    optional:
         # Forecast data
         {% if is_gdas %}
         - "{{ COMIN_OCEAN_HISTORY_MEM }}/{{ head }}inst.f009.nc"

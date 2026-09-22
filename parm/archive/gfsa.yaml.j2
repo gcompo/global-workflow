@@ -2,7 +2,7 @@ gfsa:
     {% set head = "gfs.t" + cycle_HH + "z." %}
     name: "GFSA"
     target: "{{ ATARDIR }}/{{ cycle_YMDH }}/gfsa.tar"
-    required:
+    optional:
         # Logs
         # TODO explicitly name all logs to include
         {% for log in glob("logs/" ~ cycle_YMDH ~ "/gfs*.log") %}
@@ -62,7 +62,7 @@ gfsa:
         {% endif %}
 
         # BUFR inputs
-        - "{{ COMIN_OBS }}/{{ head }}nsstbufr"
+        #- "{{ COMIN_OBS }}/{{ head }}nsstbufr"
         - "{{ COMIN_OBS }}/{{ head }}prepbufr"
         - "{{ COMIN_OBS }}/{{ head }}prepbufr.acft_profiles"
         {% endif %}  # Full cycle
@@ -74,7 +74,6 @@ gfsa:
         - "{{ COMIN_ATMOS_HISTORY }}/{{ head }}log.f{{ '%03d' % fhr }}.txt"
         {% endfor %}
 
-    optional:
         # Cyclone tracking data; only present if there's something to track.
         - "{{ COMIN_ATMOS_TRACK }}/avno.t{{ cycle_HH }}z.cyclone.trackatcfunix"
         - "{{ COMIN_ATMOS_TRACK }}/avnop.t{{ cycle_HH }}z.cyclone.trackatcfunix"

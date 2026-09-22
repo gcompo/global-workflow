@@ -84,6 +84,7 @@ elif [[ ${MACHINE_ID} = gaeac6 ]]; then
         source /opt/cray/pe/lmod/lmod/init/bash
     fi
     module reset
+    set -u
 
 elif [[ ${MACHINE_ID} = expanse* ]]; then
     # We are on SDSC Expanse

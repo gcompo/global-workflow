@@ -1,8 +1,11 @@
 gdasocean:
     name: "GDASOCEAN"
-    target: "{{ ATARDIR }}/{{ cycle_YMDH }}/gdasocean.tar"
+    target: "{{ ATARDIR }}/{{ cycle_YY }}/{{ cycle_MM }}/{{ cycle_YMDH }}/gdasocean.tar"
     # the FHMIN-hour forecast is skipped when DOIAU="NO"
-    required:
+    optional:
+        - "{{ COMIN_OCEAN_HISTORY }}/{{ RUN }}.t{{ cycle_HH }}z.inst.f000.nc"
+        - "{{ COMIN_OCEAN_HISTORY }}/{{ RUN }}.t{{ cycle_HH }}z.inst.f003.nc"
         - "{{ COMIN_OCEAN_HISTORY }}/{{ RUN }}.t{{ cycle_HH }}z.inst.f006.nc"
-        - '{{ COMIN_CONF }}/ufs.MOM_input'
-        - '{{ COMIN_CONF }}/MOM_parameter_doc.all'
+        - "{{ COMIN_OCEAN_HISTORY }}/{{ RUN }}.t{{ cycle_HH }}z.inst.f009.nc"
+        #- '{{ COMIN_CONF }}/ufs.MOM_input'
+        #- '{{ COMIN_CONF }}/MOM_parameter_doc.all'

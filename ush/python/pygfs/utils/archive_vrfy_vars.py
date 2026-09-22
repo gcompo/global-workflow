@@ -165,6 +165,8 @@ class ArchiveVrfyVars:
         AttrDict
             Dictionary containing:
             - cycle_HH: Cycle hour (e.g., '00', '06')
+            - cycle_YY: Cycle year
+            - cycle_MM: Cycle month
             - cycle_YMDH: Full cycle timestamp (YYYYMMDDHH)
             - cycle_YMD: Cycle date (YYYYMMDD)
             - head: System head designation (e.g., 'gfs.t00z.')
@@ -172,6 +174,8 @@ class ArchiveVrfyVars:
         """
         current_cycle = config_dict.current_cycle
         cycle_HH = current_cycle.strftime("%H")
+        cycle_YY = current_cycle.strftime("%Y")
+        cycle_MM = current_cycle.strftime("%m")
         cycle_YMDH = to_YMDH(current_cycle)
         cycle_YMD = to_YMD(current_cycle)
 
@@ -180,6 +184,8 @@ class ArchiveVrfyVars:
 
         cycle_vars = {
             'cycle_HH': cycle_HH,
+            'cycle_YY': cycle_YY,
+            'cycle_MM': cycle_MM,
             'cycle_YMDH': cycle_YMDH,
             'cycle_YMD': cycle_YMD,
             'VFYARC': VFYARC

@@ -1,0 +1,25 @@
+experiment:
+  net: gfs
+  mode: cycled
+  pslot: {{ 'pslot' | getenv }}
+  app: S2S
+  resdetatmos: 192
+  resdetocean: 0.25
+  comroot: {{ 'RUNTESTS' | getenv }}/COMROOT
+  expdir: {{ 'RUNTESTS' | getenv }}/EXPDIR
+  icsdir: {{ 'ICSDIR_ROOT' | getenv }}
+  idate: 1988010106
+  edate: 1989010100 #1979020106  
+  nens: 0
+  interval: 0
+  start: warm   
+  yaml: {{ HOMEglobal }}/dev/ci/cases/coupledreanl/marine3dvar.yaml
+  # icsdir:  /gpfs/f6/ira-da/world-shared/replayics/C192mx025 #/gpfs/f6/ira-da/proj-shared/Jeffrey.S.Whitaker/dumps
+
+workflow:
+  engine: rocoto
+  rocoto:
+    maxtries: 2
+    cyclethrottle: 3
+    taskthrottle: 25
+    verbosity: 2

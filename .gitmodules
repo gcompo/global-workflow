@@ -1,10 +1,12 @@
 [submodule "sorc/ufs_model.fd"]
   path = sorc/ufs_model.fd
-  url = https://github.com/ufs-community/ufs-weather-model
+  url = https://github.com/NeilBarton-NOAA/ufs-weather-model
+  branch = SFSbeta2
   ignore = dirty
 [submodule "sorc/wxflow"]
   path = sorc/wxflow
-  url = https://github.com/NOAA-EMC/wxflow
+  url = https://github.com/NOAA-PSL/wxflow
+  branch = aws_archive
 [submodule "sorc/gfs_utils.fd"]
   path = sorc/gfs_utils.fd
   url = https://github.com/NOAA-EMC/gfs-utils
@@ -17,9 +19,11 @@
 [submodule "sorc/gsi_enkf.fd"]
   path = sorc/gsi_enkf.fd
   url = https://github.com/NOAA-EMC/GSI.git
+  ignore = dirty
 [submodule "sorc/gdas.cd"]
   path = sorc/gdas.cd
-  url = https://github.com/NOAA-EMC/GDASApp.git
+  url = https://github.com/NOAA-PSL/GDASApp.git
+  branch = psl-develop
   ignore = dirty
 [submodule "sorc/gsi_utils.fd"]
   path = sorc/gsi_utils.fd
@@ -31,3 +35,7 @@
   path = sorc/nexus.fd
   url = https://github.com/NOAA-OAR-ARL/NEXUS.git
   branch = feature/gcafs
+[submodule "parm/gsinfo"]
+  path = parm/gsinfo
+  url = https://github.com/NOAA-PSL/build_gsinfo-fix.git
+  branch = psl-develop

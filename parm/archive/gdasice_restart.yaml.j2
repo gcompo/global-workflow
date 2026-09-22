@@ -1,6 +1,6 @@
 gdasice_restart:
     name: "GDASICE_RESTART"
-    target: "{{ ATARDIR }}/{{ cycle_YMDH }}/gdasice_restart.tar"
-    required:
+    target: "{{ ATARDIR }}/{{ cycle_YY }}/{{ cycle_MM }}/{{ cycle_YMDH }}/gdasice_restart.tar"
+    optional:
         # TODO: explicitly name the restart files to archive
         - '{{ COMIN_ICE_RESTART }}/*'

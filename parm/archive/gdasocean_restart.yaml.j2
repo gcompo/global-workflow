@@ -1,7 +1,7 @@
 gdasocean_restart:
     name: "GDASOCEAN_RESTART"
-    target: "{{ ATARDIR }}/{{ cycle_YMDH }}/gdasocean_restart.tar"
-    required:
+    target: "{{ ATARDIR }}/{{ cycle_YY }}/{{ cycle_MM }}/{{ cycle_YMDH }}/gdasocean_restart.tar"
+    optional:
         # TODO: explicitly name the restart files to archive
         - '{{ COMIN_OCEAN_RESTART }}/*'
         - '{{ COMIN_MED_RESTART }}/*'

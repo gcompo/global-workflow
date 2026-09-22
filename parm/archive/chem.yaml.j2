@@ -2,6 +2,6 @@ chem:
     {% set head = "gocart" %}
     name: "CHEM"
     target: "{{ ATARDIR }}/{{ cycle_YMDH }}/chem.tar"
-    required:
+    optional:
         # TODO explicitize this set
         - "{{ COMIN_CHEM_HISTORY }}/{{ head }}*"

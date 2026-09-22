@@ -2,7 +2,7 @@ gfsb:
     {% set head = "gfs.t" + cycle_HH + "z." %}
     name: "GFSB"
     target: "{{ ATARDIR }}/{{ cycle_YMDH }}/gfsb.tar"
-    required:
+    optional:
         {% if MODE == "cycled" %}
         # GRIB2 (subsampled) analysis data
         - "{{ COMIN_ATMOS_GRIB_0p50 }}/{{ head }}pres_a.0p50.analysis.grib2"

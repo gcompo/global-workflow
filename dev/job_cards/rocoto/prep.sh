@@ -200,7 +200,7 @@ else
     fi
     ${cpcmd} "${PREPBUFR_DIR}/${OPREFIX}prepbufr" "${COMOUT_OBS}/${OPREFIX}prepbufr"
     ${cpcmd} "${PREPBUFR_DIR}/${OPREFIX}prepbufr.acft_profiles" "${COMOUT_OBS}/${OPREFIX}prepbufr.acft_profiles"
-    if [[ ${DONST} == "YES" ]]; then
+    if [[ ${DONST} == "YES" && -f "${PREPBUFR_DIR}/${OPREFIX}nsstbufr" ]]; then
         ${cpcmd} "${PREPBUFR_DIR}/${OPREFIX}nsstbufr" "${COMOUT_OBS}/${OPREFIX}nsstbufr"
     fi
 fi
@@ -208,7 +208,7 @@ fi
 # Check if prepbufr, etc files were copied to COMOUT_OBS
 files="prepbufr prepbufr.acft_profiles"
 if [[ ${DONST} == "YES" ]]; then
-    files="${files} nsstbufr"
+    files="${files}"
 fi
 err=0
 for file in ${files}; do

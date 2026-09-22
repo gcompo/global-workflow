@@ -1,8 +1,8 @@
 gdas:
     {% set head = "gdas.t" + cycle_HH + "z." %}
     name: "GDAS"
-    target: "{{ ATARDIR }}/{{ cycle_YMDH }}/gdas.tar"
-    required:
+    target: "{{ ATARDIR }}/{{ cycle_YY }}/{{ cycle_MM }}/{{ cycle_YMDH }}/gdas.tar"
+    optional:
         {% if MODE == "cycled" %}
         # Cycled logs
         - "logs/{{ cycle_YMDH }}/{{ RUN }}_atmanlprod.log"
@@ -46,14 +46,18 @@ gdas:
         - "{{ COMIN_ATMOS_MASTER }}/{{ head }}master.analysis.grib2.idx"
 
         # Analysis GRIB2 (sub-sampled) data
-        - "{{ COMIN_ATMOS_GRIB_0p25 }}/{{ head }}pres_a.0p25.analysis.grib2"
-        - "{{ COMIN_ATMOS_GRIB_0p25 }}/{{ head }}pres_a.0p25.analysis.grib2.idx"
-        - "{{ COMIN_ATMOS_GRIB_1p00 }}/{{ head }}pres_a.1p00.analysis.grib2"
-        - "{{ COMIN_ATMOS_GRIB_1p00 }}/{{ head }}pres_a.1p00.analysis.grib2.idx"
-        - "{{ COMIN_ATMOS_GRIB_0p25 }}/{{ head }}pres_b.0p25.analysis.grib2"
-        - "{{ COMIN_ATMOS_GRIB_0p25 }}/{{ head }}pres_b.0p25.analysis.grib2.idx"
-        - "{{ COMIN_ATMOS_GRIB_1p00 }}/{{ head }}pres_b.1p00.analysis.grib2"
-        - "{{ COMIN_ATMOS_GRIB_1p00 }}/{{ head }}pres_b.1p00.analysis.grib2.idx"
+        #- "{{ COMIN_ATMOS_GRIB_0p25 }}/{{ head }}pres_a.0p25.analysis.grib2"
+        #- "{{ COMIN_ATMOS_GRIB_0p25 }}/{{ head }}pres_a.0p25.analysis.grib2.idx"
+        - "{{ COMIN_ATMOS_GRIB_0p50 }}/{{ head }}pres_a.0p50.analysis.grib2"
+        - "{{ COMIN_ATMOS_GRIB_0p50 }}/{{ head }}pres_a.0p50.analysis.grib2.idx"
+        #- "{{ COMIN_ATMOS_GRIB_1p00 }}/{{ head }}pres_a.1p00.analysis.grib2"
+        #- "{{ COMIN_ATMOS_GRIB_1p00 }}/{{ head }}pres_a.1p00.analysis.grib2.idx"
+        #- "{{ COMIN_ATMOS_GRIB_0p25 }}/{{ head }}pres_b.0p25.analysis.grib2"
+        #- "{{ COMIN_ATMOS_GRIB_0p25 }}/{{ head }}pres_b.0p25.analysis.grib2.idx"
+        - "{{ COMIN_ATMOS_GRIB_0p50 }}/{{ head }}pres_b.0p50.analysis.grib2"
+        - "{{ COMIN_ATMOS_GRIB_0p50 }}/{{ head }}pres_b.0p50.analysis.grib2.idx"
+        #- "{{ COMIN_ATMOS_GRIB_1p00 }}/{{ head }}pres_b.1p00.analysis.grib2"
+        #- "{{ COMIN_ATMOS_GRIB_1p00 }}/{{ head }}pres_b.1p00.analysis.grib2.idx"
 
         # Analysis netCDF (raw) data
             {% if DO_JEDIATMVAR %}
@@ -81,6 +85,11 @@ gdas:
                 {% endif %}
         # End of ensemble-resolution mean analyses
             {% endif %}
+
+        # GSI info
+        - "{{ COMIN_ATMOS_ANALYSIS }}/global_satinfo.txt"
+        - "{{ COMIN_ATMOS_ANALYSIS }}/global_convinfo.txt"
+        - "{{ COMIN_ATMOS_ANALYSIS }}/global_ozinfo.txt"
 
         # Analysis state
             {% if DO_JEDIATMVAR %}
@@ -128,7 +137,7 @@ gdas:
         - "{{ COMIN_ATMOS_RADMON }}/radmon_bcoef.tar.gz"
         - "{{ COMIN_ATMOS_RADMON }}/radmon_bcor.tar.gz"
         - "{{ COMIN_ATMOS_RADMON }}/radmon_time.tar.gz"
-        - "logs/{{ cycle_YMDH }}/{{ RUN }}_verfrad.log"
+        #- "logs/{{ cycle_YMDH }}/{{ RUN }}_verfrad.log"
             {% endif %}
 
         # Minimization monitor
@@ -152,19 +161,23 @@ gdas:
         - "logs/{{ cycle_YMDH }}/{{ RUN }}_atmos_upp_f{{ fhr3 }}.log"
             {% endif %}  ## not WRITE_DOPOST
         # Forecast GRIB2 data
-        - "{{ COMIN_ATMOS_GRIB_0p25 }}/{{ head }}pres_a.0p25.f{{ fhr3 }}.grib2"
-        - "{{ COMIN_ATMOS_GRIB_0p25 }}/{{ head }}pres_a.0p25.f{{ fhr3 }}.grib2.idx"
-        - "{{ COMIN_ATMOS_GRIB_1p00 }}/{{ head }}pres_a.1p00.f{{ fhr3 }}.grib2"
-        - "{{ COMIN_ATMOS_GRIB_1p00 }}/{{ head }}pres_a.1p00.f{{ fhr3 }}.grib2.idx"
-        - "{{ COMIN_ATMOS_GRIB_0p25 }}/{{ head }}pres_b.0p25.f{{ fhr3 }}.grib2"
-        - "{{ COMIN_ATMOS_GRIB_0p25 }}/{{ head }}pres_b.0p25.f{{ fhr3 }}.grib2.idx"
-        - "{{ COMIN_ATMOS_GRIB_1p00 }}/{{ head }}pres_b.1p00.f{{ fhr3 }}.grib2"
-        - "{{ COMIN_ATMOS_GRIB_1p00 }}/{{ head }}pres_b.1p00.f{{ fhr3 }}.grib2.idx"
+        #- "{{ COMIN_ATMOS_GRIB_0p25 }}/{{ head }}pres_a.0p25.f{{ fhr3 }}.grib2"
+        #- "{{ COMIN_ATMOS_GRIB_0p25 }}/{{ head }}pres_a.0p25.f{{ fhr3 }}.grib2.idx"
+        - "{{ COMIN_ATMOS_GRIB_0p50 }}/{{ head }}pres_a.0p50.f{{ fhr3 }}.grib2"
+        - "{{ COMIN_ATMOS_GRIB_0p50 }}/{{ head }}pres_a.0p50.f{{ fhr3 }}.grib2.idx"
+        #- "{{ COMIN_ATMOS_GRIB_1p00 }}/{{ head }}pres_a.1p00.f{{ fhr3 }}.grib2"
+        #- "{{ COMIN_ATMOS_GRIB_1p00 }}/{{ head }}pres_a.1p00.f{{ fhr3 }}.grib2.idx"
+        #- "{{ COMIN_ATMOS_GRIB_0p25 }}/{{ head }}pres_b.0p25.f{{ fhr3 }}.grib2"
+        #- "{{ COMIN_ATMOS_GRIB_0p25 }}/{{ head }}pres_b.0p25.f{{ fhr3 }}.grib2.idx"
+        - "{{ COMIN_ATMOS_GRIB_0p50 }}/{{ head }}pres_b.0p50.f{{ fhr3 }}.grib2"
+        - "{{ COMIN_ATMOS_GRIB_0p50 }}/{{ head }}pres_b.0p50.f{{ fhr3 }}.grib2.idx"
+        #- "{{ COMIN_ATMOS_GRIB_1p00 }}/{{ head }}pres_b.1p00.f{{ fhr3 }}.grib2"
+        #- "{{ COMIN_ATMOS_GRIB_1p00 }}/{{ head }}pres_b.1p00.f{{ fhr3 }}.grib2.idx"
         # Forecast GRIB2 fluxes
         - "{{ COMIN_ATMOS_MASTER }}/{{ head }}sflux.f{{ fhr3 }}.grib2"
         - "{{ COMIN_ATMOS_MASTER }}/{{ head }}sflux.f{{ fhr3 }}.grib2.idx"
         # FV3 log
-        - "{{ COMIN_ATMOS_HISTORY }}/{{ head }}log.f{{ fhr3 }}.txt"
+        #- "{{ COMIN_ATMOS_HISTORY }}/{{ head }}log.f{{ fhr3 }}.txt"
         # Raw netCDF forecasts
         - "{{ COMIN_ATMOS_HISTORY }}/{{ head }}atm.f{{ fhr3 }}.nc"
         - "{{ COMIN_ATMOS_HISTORY }}/{{ head }}sfc.f{{ fhr3 }}.nc"
@@ -174,7 +187,6 @@ gdas:
         # Forecast Master GRIB2 data for F006
         - "{{ COMIN_ATMOS_MASTER }}/{{ head }}master.f003.grib2"
         - "{{ COMIN_ATMOS_MASTER }}/{{ head }}master.f006.grib2"
-    optional:
         {% if MODE == "cycled" %}
             # Ozone and Radiance diagnostic files may not always be created
         - "{{ COMIN_ATMOS_ANALYSIS }}/{{ head }}oznstat.tar"

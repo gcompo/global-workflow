@@ -46,6 +46,7 @@ export FIXcice="${FIXglobal}/cice"
 export FIXmom="${FIXglobal}/mom6"
 export FIXreg2grb2="${FIXglobal}/reg2grb2"
 export FIXgdas="${FIXglobal}/gdas"
+export FIXCO2="/gpfs/f6/ira-da/world-shared/co2dat_4a"
 
 ########################################################################
 
@@ -558,5 +559,8 @@ if [[ "${DO_JEDIATMVAR}" == "YES" ]]; then
 	    export ATMINC_GRID="gaussian"
     fi
 fi
+
+# MOM6 IC setting needed for forecast and stage ics
+export MOM6_INTERP_ICS="{{ MOM6_INTERP_ICS }}"
 
 echo "END: config.base"

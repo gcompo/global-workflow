@@ -1,8 +1,8 @@
 gdas_restartb:
     {% set head = "gdas.t" + cycle_HH + "z." %}
     name: "GDAS_RESTARTB"
-    target: "{{ ATARDIR }}/{{ cycle_YMDH }}/gdas_restartb.tar"
-    required:
+    target: "{{ ATARDIR }}/{{ cycle_YY }}/{{ cycle_MM }}/{{ cycle_YMDH }}/gdas_restartb.tar"
+    optional:
         {# All time prefixes are pre-calculated in Python: offset_prefix (-3H if DOIAU), center_prefix, r_prefix_list #}
         # Grab the surface analysis data.
         # If IAU is on, grab the beginning of the window.

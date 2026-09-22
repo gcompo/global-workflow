@@ -2,7 +2,7 @@ gfs_netcdfa:
     {% set head = "gfs.t" + cycle_HH + "z." %}
     name: "GFS_NETCDFA"
     target: "{{ ATARDIR }}/{{ cycle_YMDH }}/gfs_netcdfa.tar"
-    required:
+    optional:
         {% if DO_JEDIATMVAR %}
            {% if ATMINC_GRID == 'gaussian' %}
         - "{{ COMIN_ATMOS_ANALYSIS }}/{{ head }}analysis.atm.a006.nc"
@@ -24,7 +24,7 @@ gfs_netcdfa:
         - "{{ COMIN_ATMOS_ANALYSIS }}/{{ head }}increment.atm.i{{ iaufhr }}.nc"
             {% endif %}
         {% endfor %}
-    optional:
+
         {% if not DO_JEDIATMVAR %}
         - "{{ COMIN_ATMOS_ANALYSIS }}/{{ head }}increment.dtf.i006.nc"
         - "{{ COMIN_ATMOS_ANALYSIS }}/{{ head }}increment.done.txt"

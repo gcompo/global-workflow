@@ -290,6 +290,8 @@ class ArchiveTarVars:
         vars_out = AttrDict()
         # Basic cycle variables (common to all systems)
         vars_out['cycle_HH'] = current_cycle.strftime("%H")
+        vars_out['cycle_YY'] = current_cycle.strftime("%Y")
+        vars_out['cycle_MM'] = current_cycle.strftime("%m")
         vars_out['cycle_YMDH'] = to_YMDH(current_cycle)
         vars_out['cycle_YMD'] = to_YMD(current_cycle)
         vars_out['cycle_fv3time'] = to_fv3time(current_cycle)

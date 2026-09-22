@@ -359,15 +359,18 @@ fi
 #--Add GSI conv, sat, and oz info parm files
 #-------------------------------------------
 if [[ -d "${HOMEglobal}/sorc/gsi_enkf.fd/fix/build_gsinfo" ]]; then
+    rm -rf ${HOMEglobal}/sorc/gsi_enkf.fd/fix/build_gsinfo
+    cd "${HOMEglobal}/sorc/gsi_enkf.fd/fix" || exit 1
 
-    cd "${HOMEglobal}/parm" || exit 1
+    mkdir -p build_gsinfo
 
-    mkdir -p gsinfo
-
-    cd gsinfo || exit 1
+    cd build_gsinfo || exit 1
 
     for dir in convinfo satinfo ozinfo obs_input hirs_fix; do
-        safe_link_or_copy "${HOMEglobal}/sorc/gsi_enkf.fd/fix/build_gsinfo/${dir}" "${dir}"
+        if [[ -d "${dir}" ]]; then
+            rm -rf "${dir}"
+        fi
+        safe_link_or_copy "${HOMEglobal}/parm/gsinfo/${dir}" "${dir}"
     done
 fi
 

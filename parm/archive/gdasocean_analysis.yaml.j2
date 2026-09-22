@@ -1,8 +1,8 @@
 gdasocean_analysis:
     {% set head = "gdas.t" + cycle_HH + "z." %}
     name: "GDASOCEAN_ANALYSIS"
-    target: "{{ ATARDIR }}/{{ cycle_YMDH }}/gdasocean_analysis.tar"
-    required:
+    target: "{{ ATARDIR }}/{{ cycle_YY }}/{{ cycle_MM }}/{{ cycle_YMDH }}/gdasocean_analysis.tar"
+    optional:
         {# anl_time_YMD and anl_time_HH are pre-calculated in Python: -3H if DOIAU, 0H otherwise #}
         # analysis and analysis increments
         - '{{ COMIN_OCEAN_ANALYSIS }}/{{ head }}jedi_analysis.a006.nc'
@@ -47,7 +47,6 @@ gdasocean_analysis:
         # soca_parameters_diffusion_vt, and soca_parameters_diffusion_hz when present
         - '{{ COMIN_CONF }}/{{ head }}soca_parameters_diffusion_??.yaml'
         - '{{ COMIN_CONF }}/soca_incpostproc.yaml'
-    optional:
         # obs space diags
         - '{{ COMIN_OCEAN_ANALYSIS }}/diags/{{ head }}ocn.*.stats.csv'
         - '{{ COMIN_OCEAN_ANALYSIS }}/diags/*.nc'

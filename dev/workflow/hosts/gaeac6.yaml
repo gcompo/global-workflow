@@ -1,5 +1,6 @@
 # Paths
-DMPDIR: '/gpfs/f6/drsa-precip3/world-shared/role.glopara/dump'
+#DMPDIR: '/gpfs/f6/drsa-precip3/world-shared/role.glopara/dump'
+DMPDIR: '/gpfs/f6/ira-da/world-shared/Joao.Souza/obs' #'/gpfs/f6/ira-da/proj-shared/dumps' #'/gpfs/f6/ira-da/proj-shared/Jeffrey.S.Whitaker/dumps' #'/gpfs/f6/ira-da/world-shared/replayics/C192mx025'
 IODADIR: '/gpfs/f6/drsa-precip3/world-shared/role.glopara/dump_ioda'
 BASE_GIT: '/gpfs/f6/drsa-precip3/world-shared/role.glopara/git'
 BASE_DATA: '/gpfs/f6/drsa-precip3/world-shared/role.glopara/data'
@@ -11,6 +12,7 @@ STMP: '/gpfs/f6/${ACCOUNT}/world-shared/${USER}'
 PTMP: '/gpfs/f6/${ACCOUNT}/world-shared/${USER}'
 NOSCRUB: '${HOMEDIR}'
 COMINsyn: '/gpfs/f6/drsa-precip3/world-shared/role.glopara/com/syndat'
+HPC_ACCOUNT: 'ira-da'
 # BQS properties
 SCHEDULER: slurm
 QUEUE: normal
@@ -30,10 +32,11 @@ PARTITION_CRON: 'cron_c6'
 USE_SCRONTAB: 'YES'
 # HPSS properties
 HPSS_PROJECT: emc-global
-ARCHCOM_TO: 'hpss'
-ATARDIR: '/NCEPDEV/${HPSS_PROJECT}/1year/${USER}/${machine}/scratch/${PSLOT}'
-CHGRP_RSTPROD: 'YES'
-CHGRP_CMD: 'chgrp rstprod'
+ARCHCOM_TO: 'aws'
+#ATARDIR: '/NCEPDEV/${HPSS_PROJECT}/1year/${USER}/${machine}/scratch/${PSLOT}'
+ATARDIR: 's3://noaa-reanalyses-pds/analyses/scout_runs/3dvar_coupledreanl_scoutrun_v2'
+CHGRP_RSTPROD: 'NO'
+CHGRP_CMD: 'chgrp ira-da'
 # Features
 SUPPORTED_RESOLUTIONS: ['C1152', 'C768', 'C384', 'C192', 'C96', 'C48']
 DO_ARCHCOM: 'YES'

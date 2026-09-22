@@ -20,19 +20,20 @@ export DBN_ALERT_TYPE=${DBN_ALERT_TYPE:-GDAS_GEMPAK}
 
 ##############################################
 # Define COM directories
-##############################################
-for grid in 0p25 1p00; do
-    declare -rx "COMIN_ATMOS_GRIB_${grid}"="${ROTDIR}/${RUN}.${PDY}/${cyc}/products/atmos/grib2/${grid}"
-done
+#############################################
+grid=1p00
+#for grid in 0p25 1p00; do
+    declare -rx "COMIN_ATMOS_GRIB_${grid}"="${ROTDIR}/${RUN}.${PDY}/${cyc}/products/atmos/grib2/${grid}" 
+#done
 
-for grid in 0p25 1p00; do
+#for grid in 0p25 1p00; do
     prod_dir="COMOUT_ATMOS_GEMPAK_${grid}"
     declare -rx "COMOUT_ATMOS_GEMPAK_${grid}"="${ROTDIR}/${RUN}.${PDY}/${cyc}/products/atmos/gempak/${grid}"
 
-    if [[ ! -d "${!prod_dir}" ]]; then
+    if [[ ! -d "${!prod_dir}" ]] ; then
         mkdir -m 775 -p "${!prod_dir}"
     fi
-done
+#done
 
 ########################################################
 # Execute the script for one degree grib

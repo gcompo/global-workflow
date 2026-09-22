@@ -8,6 +8,7 @@ echo "BEGIN: config.prep"
 # Get task specific resources
 source "${EXPDIR}/config.resources" prep
 
+export MAKE_PREPBUFR="NO"   # if NO, will copy prepbufr from globaldump
 export cdate10=${PDY}${cyc}
 
 # Relocation and syndata QC
@@ -18,7 +19,7 @@ export COMINsyn=${COMINsyn:-$(compath.py "${envir}/com/gfs/${gfs_ver}")/syndat}
 
 # Allow users to control the generation or use of either operational or
 # their processed prepbufr, prepbufr.acft_profiles, nsstbufr files
-export MAKE_PREPBUFR="YES"  # Generate prepbufr, etc. files by executing obsproc
+#export MAKE_PREPBUFR="YES"  # Generate prepbufr, etc. files by executing obsproc
 if [[ "${MAKE_PREPBUFR^^}" != "YES" ]]; then
   export USE_PREPBUFR_FROM_OPS="YES"  # Copy operational prepbufr, etc files
   if [[ "${USE_PREPBUFR_FROM_OPS^^}" != "YES" ]]; then

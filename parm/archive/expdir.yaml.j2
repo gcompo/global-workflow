@@ -15,8 +15,8 @@ expdir:
             {% if ARCH_HASHES or ARCH_DIFFS %}
             - [ "{{ EXPDIR }}/git_info.log", "{{ ROTDIR }}/{{ copy_expdir }}/." ]
             {% endif %}
-    target: "{{ ATARDIR }}/{{ cycle_YMDH }}/expdir.tar"
-    required:
+    target: "{{ ATARDIR }}/{{ cycle_YY }}/{{ cycle_MM }}/{{ cycle_YMDH }}/expdir.tar"
+    optional:
         - "{{ copy_expdir }}/config.*"
         - "{{ copy_expdir }}/{{ PSLOT }}.xml"
         {% if ARCH_HASHES or ARCH_DIFFS %}

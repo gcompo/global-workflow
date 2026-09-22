@@ -1,0 +1,67 @@
+git clone --recursive https://github.com/NOAA-PSL/global-workflow
+cd global-workflow
+git checkout 3dvar_coupledreanl_scoutrun
+git submodule update --init --recursive --remote
+source dev/ush/gw_setup.sh
+cd sorc
+./build_all.sh gfs gsi gdas &> build_all.out
+sh linkworkflow.sh
+cd ..
+pslot="C192coupled3dvar_test" RUNTESTS="/gpfs/f6/ira-da/scratch/$USER/GWTESTS" ICSDIR_ROOT="/gpfs/f6/ira-da/proj-shared/Jeffrey.S.Whitaker/replayics/C192mx025" HPC_ACCOUNT="ira-da" ./dev/workflow/create_experiment.py --yaml dev/ci/cases/coupledreanl/C192mx025_3DVarAOWCDA.yaml
+
+on orion/hercules:
+pslot="C192coupled3dvar_test" RUNTESTS="/work2/noaa/gsienkf/$USER/GWTESTS" ICSDIR_ROOT="/work/noaa/gsienkf/whitaker/replayics/C192mx025" HPC_ACCOUNT="gsienkf" ./dev/workflow/create_experiment.py --yaml dev/ci/cases/coupledreanl/C192mx025_3DVarAOWCDA.yaml
+
+cd to EXPDIR
+run rocotorun -w $PSLOT.xml -d $PSLOT.db
+scrontab $PSLOT.crontab
+ln -fs $HOMEGFS/dev/workflow/rocoto_viewer.py .
+run ./rocoto_viewer.py -w $PSLOT.xml -d $PSLOT.db to monitor progress
+
+NOTES:
+
+log files go to $RUNTESTS/COMROOT/$EXPDIR/logs. if rocotoviewer shows a workflow step died, look in the log file here to find the error message.
+
+To monitor t2m/q2m obs, add
+
+  t2m       1      -1         2m_temperature       tmp2m
+  q2m       1      -1         2m_spec_humidity     spfh2m
+
+to met_guess:: in anavinfo, and
+
+ t2m       1      0     met_guess    t2m
+ q2m       1      0     met_guess    q2m
+
+to state_vector::.  To actually assimilate, modify convinfo with
+
+diff -urN  global_convinfo_2mObs.txt global_convinfo.txt
+--- global_convinfo_2mObs.txt	2025-02-04 16:29:43.617854000 -0500
++++ global_convinfo.txt	2025-02-04 16:29:43.621991000 -0500
+@@ -43,10 +43,10 @@
+  t        136    0    1     3.0      0      0      0   2.0   5.6   1.3  10.0  0.000000     0    0.     0.      0    0.     0.    0    0
+  t        180    0    1     3.0      0      0      0   7.0   5.6   1.3   7.0  0.004000     0    0.     0.      0    0.     0.    7   -6
+  t        180    01   1     3.0      0      0      0   7.0   5.6   1.3   7.0  0.004000     0    0.     0.      0    0.     0.    8   -9
+- t        181    0    1     3.0      0      0      0   5.0   2.0   2.0   7.0  0.004000     0    0.     0.      0    0.     0.    0    0
++ t        181    0   -1     3.0      0      0      0   7.0   5.6   1.3   7.0  0.004000     0    0.     0.      0    0.     0.    0    0
+  t        182    0    1     3.0      0      0      0   7.0   5.6   1.3   7.0  0.004000     0    0.     0.      0    0.     0.    7   -6
+- t        183    0    1     3.0      0      0      0   5.0   2.0   2.0   7.0  0.004000     0    0.     0.      0    0.     0.    0    0
+- t        187    0    1     3.0      0      0      0   5.0   2.0   2.0   7.0  0.004000     0    0.     0.      0    0.     0.    0    0
++ t        183    0   -1     3.0      0      0      0   7.0   5.6   1.3   7.0  0.004000     0    0.     0.      0    0.     0.    0    0
++ t        187    0   -1     3.0      0      0      0   7.0   5.6   1.3   7.0  0.004000     0    0.     0.      0    0.     0.    0    0
+  q        118    0    1     3.0      0      0      0   8.0 100.0  10.0   8.0  0.000500     0    0.     0.      0    0.     0.    7   -6
+  q        119    0    1     3.0      0      0      0   8.0 100.0  10.0   8.0  0.000500     0    0.     0.      0    0.     0.    7   -6
+  q        120    0    1     3.0      0      0      0   8.0 100.0  10.0   8.0  0.000500     0    0.     0.      0    0.     0.    7   -6
+@@ -59,10 +59,10 @@
+  q        136    0    1     3.0      0      0      0   2.0  50.0   5.0  10.0  0.000000     0    0.     0.      0    0.     0.    0    0
+  q        180    0    1     3.0      0      0      0   8.0 100.0  10.0   8.0  0.000500     0    0.     0.      0    0.     0.    6   -1
+  q        180    01   1     3.0      0      0      0   8.0 100.0  10.0   8.0  0.000500     0    0.     0.      0    0.     0.    6   -9
+- q        181    0    1     3.0      0      0      0   5.0  10.0  10.0   8.0  0.000500     0    0.     0.      0    0.     0.    0    0
++ q        181    0   -1     3.0      0      0      0   8.0 100.0  10.0   8.0  0.000500     0    0.     0.      0    0.     0.    0    0
+  q        182    0    1     3.0      0      0      0   8.0 100.0  10.0   8.0  0.000600     0    0.     0.      0    0.     0.    6   -1
+- q        183    0    1     3.0      0      0      0   5.0  10.0  10.0   8.0  0.000600     0    0.     0.      0    0.     0.    0    0
+- q        187    0    1     3.0      0      0      0   5.0  10.0  10.0   8.0  0.000600     0    0.     0.      0    0.     0.    0    0
++ q        183    0   -1     3.0      0      0      0   8.0 100.0  10.0   8.0  0.000600     0    0.     0.      0    0.     0.    0    0
++ q        187    0   -1     3.0      0      0      0   8.0 100.0  10.0   8.0  0.000600     0    0.     0.      0    0.     0.    0    0
+  pw       152    0   -1     3.0      0      0      0  10.0   8.0   2.0  10.0  0.000000     0    0.     0.      0    0.     0.    0    0
+  pw       153    0   -1     3.0      0      0      0   5.0   5.0   2.0   5.0  0.000000     0    0.     0.      0    0.     0.    0    0
+  pw       156    0   -1     3.0      0      0      0  10.0   8.0   2.0  10.0  0.000000     0    0.     0.      0    0.     0.    0    0

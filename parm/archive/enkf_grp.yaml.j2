@@ -1,7 +1,7 @@
 enkf_grp:
     name: "ENKF_GRP"
     target: "{{ ATARDIR }}/{{ cycle_YMDH }}/{{ RUN }}_grp{{ ENSGRP }}.tar"
-    required:
+    optional:
         # Forecast data
         {% if is_gdas %}
             {% for fhr in range(3, 10, 3) %}

@@ -101,6 +101,7 @@ GSNDBF=${GSNDBF:-${COMIN_OBS}/${OPREFIX}goesnd.tm00.bufr_d${OSUFFIX}}
 GSNDBF1=${GSNDBF1:-${COMIN_OBS}/${OPREFIX}goesfv.tm00.bufr_d${OSUFFIX}}
 B1HRS2=${B1HRS2:-${COMIN_OBS}/${OPREFIX}1bhrs2.tm00.bufr_d${OSUFFIX}}
 B1MSU=${B1MSU:-${COMIN_OBS}/${OPREFIX}1bmsu.tm00.bufr_d${OSUFFIX}}
+B1SSU=${B1SSU:-${COMIN_OBS}/${OPREFIX}1bssu.tm00.bufr_d${OSUFFIX}}
 B1HRS3=${B1HRS3:-${COMIN_OBS}/${OPREFIX}1bhrs3.tm00.bufr_d${OSUFFIX}}
 B1HRS4=${B1HRS4:-${COMIN_OBS}/${OPREFIX}1bhrs4.tm00.bufr_d${OSUFFIX}}
 B1AMUA=${B1AMUA:-${COMIN_OBS}/${OPREFIX}1bamua.tm00.bufr_d${OSUFFIX}}
@@ -159,6 +160,11 @@ OMPSLPNC=${OMPSLPNC:-${COMIN_OBS}/OMPS-LPoz-Vis.${PDY}_${cyc}z.nc}
 MLS55NC=${MLS55NC:-${COMIN_OBS}/MLS-v5.0-oz.${PDY}_${cyc}z.nc}
 SAILDRONE=${SAILDRONE:-${COMIN_OBS}/${OPREFIX}saldrn.tm00.bufr_d${OSUFFIX}}
 GSBBF=${GSBBF:-${COMIN_OBS}/${OPREFIX}gsbpfl.tm00.bufr_d${OSUFFIX}}
+OMIEFFNC=${OMIEFFNC:-${COMIN_OBS}/OMIeff-adj.${PDY}_${cyc}z.nc}
+OMPSNMEFFNC=${OMPSNMEFFNC:-${COMIN_OBS}/OMPSNM.${PDY}_${cyc}z.nc}
+OMPSNPNC=${OMPSNPNC:-${COMIN_OBS}/OMPSNP.${PDY}_${cyc}z.nc}
+OMPSLPNC=${OMPSLPNC:-${COMIN_OBS}/OMPS-LPoz-Vis.${PDY}_${cyc}z.nc}
+MLS55NC=${MLS55NC:-${COMIN_OBS}/MLS-v5.0-oz.${PDY}_${cyc}z.nc}
 
 # Guess files
 GPREFIX=${GPREFIX:-""}
@@ -478,6 +484,7 @@ ${NLN} "${RAPIDSCATBF}" rapidscatbufr
 ${NLN} "${GSNDBF}" gsndrbufr
 ${NLN} "${GSNDBF1}" gsnd1bufr
 ${NLN} "${B1MSU}" msubufr
+${NLN} "${B1SSU}" ssubufr
 ${NLN} "${B1AMUA}" amsuabufr
 ${NLN} "${B1AMUB}" amsubbufr
 ${NLN} "${B1MHS}" mhsbufr
@@ -889,6 +896,13 @@ fi
 
 # Cat runtime output files.
 cat fort.2* > "${GSISTAT}"
+
+# copy generated *info files to output directory.
+if [[ "${SATINFO}" == "generate" ]]; then
+    cpfs satinfo ${COMOUT_ATMOS_ANALYSIS}/global_satinfo.txt
+    cpfs convinfo ${COMOUT_ATMOS_ANALYSIS}/global_convinfo.txt
+    cpfs ozinfo ${COMOUT_ATMOS_ANALYSIS}/global_ozinfo.txt
+fi
 
 # If requested, create obsinput tarball from obs_input.* files
 if [[ ${RUN_SELECT} == "YES" ]]; then

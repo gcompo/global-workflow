@@ -2,7 +2,7 @@ gfs_downstream:
     {% set head = "gfs.t" + cycle_HH + "z." %}
     name: "GFS_DOWNSTREAM"
     target: "{{ ATARDIR }}/{{ cycle_YMDH }}/gfs_downstream.tar"
-    required:
+    optional:
         {% if DO_GEMPAK and DO_BUFRSND %}
         - "{{ COMIN_ATMOS_GEMPAK }}/gfs_{{ cycle_YMDH }}.sfc.bufr"
         - "{{ COMIN_ATMOS_GEMPAK }}/gfs_{{ cycle_YMDH }}.soundings.bufr"

@@ -46,6 +46,7 @@ local common_modules = {
   "py-pandas",
   "py-python-dateutil",
   "py-xarray",
+  "awscli-v2",
   -- TODO: Reenable when MET/METplus and verif-global are at compatible versions
   -- "met",
   -- "metplus",
